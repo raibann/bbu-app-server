@@ -3,6 +3,7 @@ package com.dinsaren.bbuappserver.security.services;
 import com.dinsaren.bbuappserver.constants.Constants;
 import com.dinsaren.bbuappserver.models.User;
 import com.dinsaren.bbuappserver.repository.UserRepository;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     User user;
     var userName = userRepository.findByUsernameAndStatus(username, Constants.ACTIVE_STATUS);
-    if(userName.isEmpty()){
+    if(username.isEmpty()){
       user = userRepository.findByPhoneAndStatus(username, Constants.ACTIVE_STATUS)
               .orElseThrow(() -> new UsernameNotFoundException("User Not Found with phone: " + username));
     }else{
